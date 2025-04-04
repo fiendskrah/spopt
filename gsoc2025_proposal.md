@@ -74,7 +74,7 @@ The project mentor(s) have already done some work to produce the code
 required to accomplish this for personal use, and seek to generalize
 the code as a new module in `spopt`. Because of this, the GSOC student
 is not starting from scratch. Some code shared to an [issue
-thread][issue] contains an suggested example call:
+thread][issue] contains a suggested example call:
 
 ```python
 problem = Route(
@@ -112,14 +112,16 @@ total travel costs of different problem solutions.
 Upon inspection of the [draft pull request][pull-request], the routing
 engine code lives in `engine.py`. This file contains functionality to
 generate the distance/duration matrices that represent the network
-required to initialize a VRP in two key functions. `build_route_table()`
-requires the target nodes in the network, which can be provided by the
-arguments `demand_sites` and `candidate_depots`. `build_route_table()`
-takes these nodes and locates them using the `get_coordinates()`
-function. Similarly, the `build_specific_route()` function constructs a route
-between each waypoint provided in a geopandas GeoDataFrame or
-GeoSeries object by connecting to OSRM via the http interface or
-through `py-osrm` if the http fails.
+required to initialize a VRP in two key
+functions. `build_route_table()` and
+`build_specific_route()`. `build_route_table` requires the target
+nodes in the network, which can be provided by the arguments
+`demand_sites` and `candidate_depots`. The function takes these nodes
+and locates them using the `get_coordinates()` function. Similarly,
+the `build_specific_route()` function constructs a route between each
+waypoint provided in a geopandas GeoDataFrame or GeoSeries object by
+connecting to OSRM via the http interface or through `py-osrm` if the
+http fails.
 
 Looking at these two core functions, the routes are generated from a
 travel network using the [Open Source Routing Machine][OSRM]
@@ -226,7 +228,7 @@ and Prize Collecting VRP. The application of the VRP represents
 pedagogical value for the GSOC student, but the generalized
 implementation of the routing engine would enable the application of
 other route based models, i.e. optimization applications that require
-distances and durations from mapping services. Therefore a stretch
+distances and durations from mapping services. Therefore, a stretch
 goal for the GSOC student would be to additionally write code to
 leverage a generalized routing engine for other problems, such as the
 project described in the *School District Optimization for Exploratory
