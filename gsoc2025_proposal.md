@@ -235,7 +235,7 @@ be discussed and finalized during the *Community Bonding and Scoping Period*.
 
 ## Schedule of Deliverables
 
-### **Community Bonding and Scoping Period**
+### **Community Bonding and Scoping Period [May 8 - June 1]**
 
 The primary purpose of this period is to reach decisions about the
 issues raised in the *Technical Details* section and fill any gaps in
@@ -250,7 +250,7 @@ postson my [blog][blog].
 - Finalized decision about replacing the routing engine or further integrating with OSRM
 - Finalized GSOC schedule of tasks and deliverable deadlines
 
-### **Phase 1**
+### **Phase 1 [June 2 - July 14]**
 
 The primary deliverable of phase 1 is a working version of the
 generalized routing engine, which will be capable of initializing,
@@ -261,7 +261,7 @@ parameterizing, and solving a VRP.
 - Generalized routing engine
 - Tutorial jupyter notebook demonstrating implementation of VRP
 
-### **Phase 2**
+### **Phase 2 [July 14 - Aug 25] **
 
 The phase 2 deliverable will iterate on the routing engine by
 implementing additional models and edge case functionality and
@@ -274,7 +274,7 @@ extent of the stretch goals that will be pursued.
 - Tutorial jupyter notebooks demonstrating implementations of CVRP, Split Delivery VRP, and Prize-Collecting VRP
 - Tutorial jupyter notebook demonstrating implementation of Segregation Minimizing problem
 
-### **Final Week**
+### **Final Week [Aug 25 - Sept 1]**
 
 - Final sign-off blog post
 - Final commit and pull request
