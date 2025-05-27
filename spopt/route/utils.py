@@ -1,6 +1,6 @@
+import spopt.engine
 import numpy
 import pandas
-import engine
 import copy
 import geopandas
 import shapely
