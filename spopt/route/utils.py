@@ -250,7 +250,7 @@ def routes_and_stops(
         route_obj = route_lut[name]
         group = group.sort_values("stop_number")
         coordinates = shapely.get_coordinates(group.geometry)
-        shape, durations = routing.build_specific_route(
+        shape, durations = route.build_specific_route(
             numpy.vstack(
                 (
                 depot_location,
