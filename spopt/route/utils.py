@@ -281,9 +281,9 @@ def routes_and_stops(
             ) * cost_unit,
             deptime,
             rettime,
-            round(route_obj.duration() / truck_obj.max_duration * 100, 2),
-            round(route_obj.delivery() / truck_obj.capacity * 100, 2),
-            round(route_obj.distance() / truck_obj.max_distance * 100, 2),
+            round(route_obj.duration().astype(int) / truck_obj.max_duration.astype(int) * 100, 2),
+            round(route_obj.delivery().astype(int) / truck_obj.capacity.astype(int) * 100, 2),
+            round(route_obj.distance().astype(int) / truck_obj.max_distance.astype(int) * 100, 2),
             shape
         ))
     
