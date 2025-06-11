@@ -282,7 +282,7 @@ def routes_and_stops(
             deptime,
             rettime,
             round(float(route_obj.duration()) / truck_obj.max_duration * 100, 2),
-            round(float(route_obj.delivery()) / truck_obj.capacity * 100, 2),
+            round(float(route_obj.delivery()[0]) / truck_obj.capacity[0] * 100, 2),
             round(float(route_obj.distance()) / truck_obj.max_distance * 100, 2),
             shape
         ))
