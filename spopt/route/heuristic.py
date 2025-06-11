@@ -370,7 +370,8 @@ class LastMile:
             "route_name", categorical=True, tiles="CartoDB positron"
         )
         stops_for_map = self.stops_.copy()
-        stops_for_map["eta"] = self.stops_.eta.astype(str)
+        for col in stops_for_map.select_dtypes(include=["datetime64[ns]"]).columns:
+            stops_for_map[col] = stops_for_map[col].astype(str)
         stops_for_map.explore(
             "route_name",
             m=m,
