@@ -372,7 +372,7 @@ class LastMile:
         stops_for_map = self.stops_.copy()
         for col in stops_for_map.columns:
             if col != "geometry":
-                stops_for_map[col] = stops_for_map[col].astype(str)
+                stops_for_map[col] = self.stops_[col].astype(str)
         stops_for_map.explore(
             "route_name",
             m=m,
