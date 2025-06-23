@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_29f4e7f062eabb3d438438b1899ffe55 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>$( function() {
+        $( ".maplegend" ).draggable({
+            start: function (event, ui) {
+                $(this).css({
+                    right: "auto",
+                    top: "auto",
+                    bottom: "auto"
+                });
+            }
+        });
+    });
+    </script>
+    <style type='text/css'>
+      .maplegend {
+        position: absolute;
+        z-index:9999;
+        background-color: rgba(255, 255, 255, .8);
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        padding: 10px;
+        font: 12px/14px Arial, Helvetica, sans-serif;
+        right: 10px;
+        bottom: 20px;
+      }
+      .maplegend .legend-title {
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+        }
+      .maplegend .legend-scale ul {
+        margin: 0;
+        margin-bottom: 0px;
+        padding: 0;
+        float: left;
+        list-style: none;
+        }
+      .maplegend .legend-scale ul li {
+        list-style: none;
+        margin-left: 0;
+        line-height: 16px;
+        margin-bottom: 2px;
+        }
+      .maplegend ul.legend-labels li span {
+        display: block;
+        float: left;
+        height: 14px;
+        width: 14px;
+        margin-right: 5px;
+        margin-left: 0;
+        border: 0px solid #ccc;
+        }
+      .maplegend .legend-source {
+        color: #777;
+        clear: both;
+        }
+      .maplegend a {
+        color: #777;
+        }
+    </style>
+    
+</head>
+<body>
+    
+    
+    <div id='maplegend route_name' class='maplegend'>
+        <div class='legend-title'>route_name</div>
+        <div class='legend-scale'>
+            <ul class='legend-labels'>
+                <li><span style='background:#1f77b4'></span>abstract-perrot</li>
+                <li><span style='background:#9edae5'></span>critical-blanchet</li>
+            </ul>
+        </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_29f4e7f062eabb3d438438b1899ffe55" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_29f4e7f062eabb3d438438b1899ffe55 = L.map(
+                "map_29f4e7f062eabb3d438438b1899ffe55",
+                {
+                    center: [53.360371, -6.2417295],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_29f4e7f062eabb3d438438b1899ffe55);
+
+            
+
+        
+    
+            var tile_layer_8c6fd167c6de59806ce574531546f967 = L.tileLayer(
+                "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8c6fd167c6de59806ce574531546f967.addTo(map_29f4e7f062eabb3d438438b1899ffe55);
+        
+    
+            map_29f4e7f062eabb3d438438b1899ffe55.fitBounds(
+                [[53.30965, -6.322156], [53.411092, -6.161303]],
+                {}
+            );
+        
+    
+        function geo_json_fb8a4ba69b7b2076f891e3a532ff1856_styler(feature) {
+            switch(feature.id) {
+                case "0": 
+                    return {"color": "#1f77b4", "fillColor": "#1f77b4", "fillOpacity": 0.5, "weight": 2};
+                default:
+                    return {"color": "#9edae5", "fillColor": "#9edae5", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+        function geo_json_fb8a4ba69b7b2076f891e3a532ff1856_highlighter(feature) {
+            switch(feature.id) {
+                default:
+                    return {"fillOpacity": 0.75};
+            }
+        }
+        function geo_json_fb8a4ba69b7b2076f891e3a532ff1856_pointToLayer(feature, latlng) {
+            var opts = {
+  "stroke": true,
+  "color": "#3388ff",
+  "weight": 3,
+  "opacity": 1.0,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "#3388ff",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "radius": 2,
+};
+            
+            let style = geo_json_fb8a4ba69b7b2076f891e3a532ff1856_styler(feature)
+            Object.assign(opts, style)
+            
+            return new L.CircleMarker(latlng, opts)
+        }
+
+        function geo_json_fb8a4ba69b7b2076f891e3a532ff1856_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_fb8a4ba69b7b2076f891e3a532ff1856.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_fb8a4ba69b7b2076f891e3a532ff1856_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_fb8a4ba69b7b2076f891e3a532ff1856 = L.geoJson(null, {
+                onEachFeature: geo_json_fb8a4ba69b7b2076f891e3a532ff1856_onEachFeature,
+            
+                style: geo_json_fb8a4ba69b7b2076f891e3a532ff1856_styler,
+                pointToLayer: geo_json_fb8a4ba69b7b2076f891e3a532ff1856_pointToLayer,
+            ...{
+}
+        });
+
+        function geo_json_fb8a4ba69b7b2076f891e3a532ff1856_add (data) {
+            geo_json_fb8a4ba69b7b2076f891e3a532ff1856
+                .addData(data);
+        }
+            geo_json_fb8a4ba69b7b2076f891e3a532ff1856_add({"bbox": [-6.322156, 53.30965, -6.161303, 53.411092], "features": [{"bbox": [-6.290554, 53.30965, -6.214293, 53.354702], "geometry": {"coordinates": [[-6.28743, 53.34213], [-6.286265, 53.342123], [-6.286268, 53.34164], [-6.286268, 53.34164], [-6.283914, 53.341521], [-6.283731, 53.343405], [-6.277748, 53.342798], [-6.274733, 53.343392], [-6.271797, 53.342954], [-6.270112, 53.343498], [-6.267646, 53.344058], [-6.267551, 53.343744], [-6.269929, 53.343125], [-6.270017, 53.342114], [-6.268569, 53.342436], [-6.26694, 53.341082], [-6.265956, 53.341525], [-6.264233, 53.341275], [-6.263409, 53.34084], [-6.263752, 53.340302], [-6.264525, 53.340593], [-6.264199, 53.341118], [-6.26363, 53.341847], [-6.264092, 53.341971], [-6.264537, 53.34209], [-6.264403, 53.343005], [-6.263853, 53.343019], [-6.26274, 53.343045], [-6.262137, 53.34382], [-6.261777, 53.343543], [-6.260873, 53.34386], [-6.260897, 53.344281], [-6.261847, 53.344285], [-6.261836, 53.344916], [-6.262672, 53.344899], [-6.263312, 53.344886], [-6.263339, 53.344211], [-6.262441, 53.344246], [-6.261777, 53.343543], [-6.262034, 53.343055], [-6.260638, 53.342828], [-6.260984, 53.342407], [-6.262142, 53.342744], [-6.262504, 53.342223], [-6.263642, 53.340328], [-6.265403, 53.340676], [-6.266114, 53.338491], [-6.265754, 53.337455], [-6.265612, 53.336968], [-6.26532, 53.336043], [-6.26522, 53.33533], [-6.265174, 53.333871], [-6.262955, 53.333784], [-6.262624, 53.332957], [-6.263106, 53.332537], [-6.260562, 53.330505], [-6.264296, 53.330231], [-6.264393, 53.330637], [-6.26486, 53.332597], [-6.268316, 53.332465], [-6.268108, 53.331221], [-6.267235, 53.331245], [-6.267162, 53.330511], [-6.26523, 53.330585], [-6.265128, 53.331332], [-6.264609, 53.331356], [-6.264971, 53.333098], [-6.264849, 53.333662], [-6.262987, 53.333884], [-6.263119, 53.33438], [-6.263359, 53.335843], [-6.262925, 53.337552], [-6.267772, 53.337653], [-6.273285, 53.338965], [-6.275189, 53.337324], [-6.275021, 53.336403], [-6.273442, 53.336336], [-6.273283, 53.335762], [-6.27526, 53.333071], [-6.275527, 53.329593], [-6.277984, 53.326553], [-6.279346, 53.321711], [-6.278856, 53.319205], [-6.282387, 53.314596], [-6.283068, 53.311269], [-6.283409, 53.31008], [-6.284283, 53.30965], [-6.284536, 53.309918], [-6.284065, 53.309709], [-6.274659, 53.312049], [-6.275715, 53.314212], [-6.2726, 53.314163], [-6.267563, 53.321341], [-6.267792, 53.321882], [-6.265908, 53.322094], [-6.265327, 53.324298], [-6.264794, 53.327099], [-6.261527, 53.327266], [-6.261599, 53.327561], [-6.262443, 53.328617], [-6.259038, 53.329126], [-6.258176, 53.327166], [-6.256336, 53.326511], [-6.254823, 53.325256], [-6.250259, 53.323463], [-6.250012, 53.323358], [-6.247637, 53.322131], [-6.243511, 53.323483], [-6.240789, 53.324921], [-6.240262, 53.324506], [-6.239374, 53.323809], [-6.237946, 53.324434], [-6.239417, 53.325584], [-6.23383, 53.328469], [-6.232751, 53.330028], [-6.230673, 53.328992], [-6.230488, 53.328929], [-6.230398, 53.328897], [-6.228994, 53.328433], [-6.226936, 53.327866], [-6.225379, 53.329073], [-6.224884, 53.330299], [-6.222298, 53.331912], [-6.218309, 53.331434], [-6.215757, 53.332099], [-6.214293, 53.333672], [-6.215128, 53.332785], [-6.215449, 53.332449], [-6.219598, 53.335391], [-6.222028, 53.336092], [-6.222904, 53.338534], [-6.222398, 53.338896], [-6.222735, 53.338637], [-6.223022, 53.338657], [-6.223678, 53.340006], [-6.226503, 53.3418], [-6.227597, 53.341768], [-6.227779, 53.341747], [-6.231418, 53.341513], [-6.24115, 53.342749], [-6.240792, 53.344487], [-6.239825, 53.344418], [-6.239613, 53.345359], [-6.237082, 53.345012], [-6.23722, 53.344183], [-6.238197, 53.344252], [-6.240792, 53.344487], [-6.240448, 53.346103], [-6.241473, 53.346358], [-6.241187, 53.347622], [-6.246102, 53.347952], [-6.245818, 53.349442], [-6.24821, 53.349491], [-6.243128, 53.349298], [-6.24096, 53.349121], [-6.240818, 53.350357], [-6.246691, 53.354702], [-6.249378, 53.35228], [-6.25, 53.351461], [-6.25144, 53.349365], [-6.251839, 53.347486], [-6.253899, 53.347447], [-6.254094, 53.347092], [-6.254231, 53.34746], [-6.255955, 53.347487], [-6.258495, 53.347073], [-6.25914, 53.346926], [-6.259752, 53.348327], [-6.263611, 53.347914], [-6.263453, 53.347366], [-6.265915, 53.346805], [-6.267338, 53.350153], [-6.265321, 53.350717], [-6.268214, 53.349918], [-6.269459, 53.350241], [-6.270075, 53.351069], [-6.27058, 53.349263], [-6.272297, 53.348945], [-6.272458, 53.350245], [-6.278903, 53.349769], [-6.27949, 53.349824], [-6.280192, 53.347092], [-6.280211, 53.347021], [-6.28123, 53.343187], [-6.285973, 53.343562], [-6.290554, 53.34337], [-6.288373, 53.343506], [-6.2884, 53.342498], [-6.28743, 53.34213]], "type": "LineString"}, "id": "0", "properties": {"__folium_color": "#1f77b4", "arrival": "2030-01-02 09:50:00", "departure": "2030-01-02 07:01:00", "distance_m": 30373, "duration_min": 169, "fuel_cost_\u20ac": 121.492, "labor_cost_\u20ac": 84.5, "route_name": "abstract-perrot", "total_cost_\u20ac": 485.992, "truck_cost_\u20ac": 280.0, "truck_type": "0", "utilization_load": 88.6, "utilization_rangelimit": 0.0, "utilization_time": 35.21}, "type": "Feature"}, {"bbox": [-6.322156, 53.328167, -6.161303, 53.411092], "geometry": {"coordinates": [[-6.28743, 53.34213], [-6.287613, 53.340775], [-6.285736, 53.339945], [-6.287201, 53.337889], [-6.286463, 53.337184], [-6.290678, 53.333715], [-6.289098, 53.332411], [-6.291416, 53.333308], [-6.292962, 53.332326], [-6.305027, 53.328167], [-6.306223, 53.328238], [-6.29819, 53.330133], [-6.297692, 53.337198], [-6.298101, 53.336201], [-6.299086, 53.336464], [-6.299745, 53.338656], [-6.314574, 53.339613], [-6.315751, 53.340265], [-6.318764, 53.339666], [-6.322156, 53.339162], [-6.321129, 53.339423], [-6.320839, 53.339496], [-6.314298, 53.340461], [-6.307659, 53.340632], [-6.308061, 53.344271], [-6.306066, 53.343892], [-6.302647, 53.345057], [-6.291855, 53.346241], [-6.291123, 53.34696], [-6.292498, 53.346889], [-6.295105, 53.346628], [-6.290481, 53.347458], [-6.273402, 53.345609], [-6.269563, 53.345878], [-6.260883, 53.347172], [-6.259393, 53.347521], [-6.261666, 53.352448], [-6.268132, 53.349919], [-6.270075, 53.351069], [-6.274509, 53.350318], [-6.272954, 53.353561], [-6.273474, 53.358725], [-6.272701, 53.361006], [-6.271658, 53.365545], [-6.273012, 53.367713], [-6.285402, 53.373894], [-6.2888, 53.380304], [-6.297698, 53.386857], [-6.298849, 53.38898], [-6.297821, 53.389801], [-6.302215, 53.389891], [-6.304043, 53.391948], [-6.305713, 53.397011], [-6.312385, 53.404379], [-6.311329, 53.405827], [-6.291555, 53.408002], [-6.227127, 53.411092], [-6.222598, 53.409985], [-6.217473, 53.410878], [-6.193522, 53.405445], [-6.18258, 53.40404], [-6.177764, 53.40246], [-6.170778, 53.401813], [-6.170446, 53.403343], [-6.161589, 53.402787], [-6.161593, 53.402247], [-6.16252, 53.402605], [-6.161303, 53.398767], [-6.164022, 53.394926], [-6.162736, 53.395209], [-6.161824, 53.396001], [-6.166394, 53.393886], [-6.167679, 53.391103], [-6.174482, 53.386742], [-6.176192, 53.382964], [-6.175097, 53.380339], [-6.198144, 53.374647], [-6.201945, 53.372835], [-6.202805, 53.37134], [-6.206724, 53.370947], [-6.21415, 53.367508], [-6.221996, 53.36663], [-6.227841, 53.36415], [-6.229818, 53.364359], [-6.228951, 53.365783], [-6.22652, 53.368453], [-6.250353, 53.375817], [-6.247816, 53.378087], [-6.246769, 53.377858], [-6.245005, 53.376966], [-6.248167, 53.37768], [-6.252963, 53.372735], [-6.254998, 53.368755], [-6.251152, 53.367756], [-6.242182, 53.362315], [-6.248365, 53.357701], [-6.259676, 53.353374], [-6.259163, 53.352374], [-6.260823, 53.351377], [-6.259527, 53.348446], [-6.253919, 53.349484], [-6.253004, 53.350859], [-6.254925, 53.35065], [-6.258212, 53.350133], [-6.25762, 53.348751], [-6.252316, 53.349403], [-6.251584, 53.347316], [-6.247959, 53.346731], [-6.248522, 53.345314], [-6.250764, 53.341173], [-6.242234, 53.338215], [-6.243372, 53.338399], [-6.246355, 53.339594], [-6.251325, 53.334583], [-6.253429, 53.335378], [-6.255255, 53.334401], [-6.257259, 53.336145], [-6.255626, 53.338491], [-6.258765, 53.339579], [-6.258262, 53.341289], [-6.257041, 53.341143], [-6.256333, 53.342577], [-6.254789, 53.34224], [-6.256514, 53.338918], [-6.251447, 53.337563], [-6.253893, 53.33491], [-6.255255, 53.334401], [-6.257259, 53.336145], [-6.255716, 53.33859], [-6.260866, 53.339816], [-6.261467, 53.339099], [-6.264525, 53.340593], [-6.270044, 53.340574], [-6.270237, 53.341458], [-6.272335, 53.341487], [-6.272306, 53.342918], [-6.274323, 53.343278], [-6.277971, 53.342798], [-6.288361, 53.343426], [-6.28743, 53.34213]], "type": "LineString"}, "id": "1", "properties": {"__folium_color": "#9edae5", "arrival": "2030-01-02 09:30:00", "departure": "2030-01-02 07:01:00", "distance_m": 55826, "duration_min": 149, "fuel_cost_\u20ac": 5.5826, "labor_cost_\u20ac": 93.87, "route_name": "critical-blanchet", "total_cost_\u20ac": 284.25260000000003, "truck_cost_\u20ac": 184.8, "truck_type": "2", "utilization_load": 100.0, "utilization_rangelimit": 0.0, "utilization_time": 31.04}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+    geo_json_fb8a4ba69b7b2076f891e3a532ff1856.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature => {
+        if (feature === null) {
+            return '';
+        } else if (typeof(feature)=='object') {
+            return JSON.stringify(feature);
+        } else {
+            return feature;
+        }
+    }
+    let fields = ["route_name", "truck_type", "duration_min", "distance_m", "fuel_cost_\u20ac", "labor_cost_\u20ac", "truck_cost_\u20ac", "total_cost_\u20ac", "departure", "arrival", "utilization_time", "utilization_load", "utilization_rangelimit"];
+    let aliases = ["route_name", "truck_type", "duration_min", "distance_m", "fuel_cost_\u20ac", "labor_cost_\u20ac", "truck_cost_\u20ac", "total_cost_\u20ac", "departure", "arrival", "utilization_time", "utilization_load", "utilization_rangelimit"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i]}</th>
+            
+            <td>${handleObject(layer.feature.properties[v])}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{
+  "sticky": true,
+  "className": "foliumtooltip",
+});
+                     
+    
+            geo_json_fb8a4ba69b7b2076f891e3a532ff1856.addTo(map_29f4e7f062eabb3d438438b1899ffe55);
+        
+    
+        function geo_json_5e6f200585d6ed4c3e686139c35fa446_styler(feature) {
+            switch(feature.id) {
+                case "0": case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case "10": case "11": case "12": case "13": case "14": case "15": case "16": case "17": case "18": case "19": case "20": case "21": case "22": case "23": case "24": case "25": case "26": case "27": case "28": case "29": case "30": case "31": case "32": case "33": case "34": case "35": case "36": case "37": case "38": case "39": case "40": case "41": case "42": case "43": case "44": case "45": case "46": case "47": case "48": case "49": case "50": case "51": case "52": case "53": case "54": case "55": case "56": case "57": case "58": case "59": case "60": 
+                    return {"color": "black", "fillColor": "#1f77b4", "fillOpacity": 0.5, "radius": 3, "weight": 1.5};
+                default:
+                    return {"color": "black", "fillColor": "#9edae5", "fillOpacity": 0.5, "radius": 3, "weight": 1.5};
+            }
+        }
+        function geo_json_5e6f200585d6ed4c3e686139c35fa446_highlighter(feature) {
+            switch(feature.id) {
+                default:
+                    return {"fillOpacity": 0.75};
+            }
+        }
+        function geo_json_5e6f200585d6ed4c3e686139c35fa446_pointToLayer(feature, latlng) {
+            var opts = {
+  "stroke": true,
+  "color": "#3388ff",
+  "weight": 3,
+  "opacity": 1.0,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "#3388ff",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "radius": 2,
+};
+            
+            let style = geo_json_5e6f200585d6ed4c3e686139c35fa446_styler(feature)
+            Object.assign(opts, style)
+            
+            return new L.CircleMarker(latlng, opts)
+        }
+
+        function geo_json_5e6f200585d6ed4c3e686139c35fa446_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_5e6f200585d6ed4c3e686139c35fa446.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_5e6f200585d6ed4c3e686139c35fa446_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_5e6f200585d6ed4c3e686139c35fa446 = L.geoJson(null, {
+                onEachFeature: geo_json_5e6f200585d6ed4c3e686139c35fa446_onEachFeature,
+            
+                style: geo_json_5e6f200585d6ed4c3e686139c35fa446_styler,
+                pointToLayer: geo_json_5e6f200585d6ed4c3e686139c35fa446_pointToLayer,
+            ...{
+}
+        });
+
+        function geo_json_5e6f200585d6ed4c3e686139c35fa446_add (data) {
+            geo_json_5e6f200585d6ed4c3e686139c35fa446
+                .addData(data);
+        }
+            geo_json_5e6f200585d6ed4c3e686139c35fa446_add({"bbox": [-6.3213412, 53.3098046, -6.1613376, 53.4022449], "features": [{"bbox": [-6.2865015, 53.3420131, -6.2865015, 53.3420131], "geometry": {"coordinates": [-6.2865015, 53.3420131], "type": "Point"}, "id": "0", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:02:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "62", "stop_number": "1", "target_uid": "629750014"}, "type": "Feature"}, {"bbox": [-6.286488, 53.3419024, -6.286488, 53.3419024], "geometry": {"coordinates": [-6.286488, 53.3419024], "type": "Point"}, "id": "1", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:03:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "63", "stop_number": "2", "target_uid": "629750018"}, "type": "Feature"}, {"bbox": [-6.2698697, 53.3434574, -6.2698697, 53.3434574], "geometry": {"coordinates": [-6.2698697, 53.3434574], "type": "Point"}, "id": "2", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:07:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "13", "stop_number": "3", "target_uid": "310408293"}, "type": "Feature"}, {"bbox": [-6.2700507, 53.3431186, -6.2700507, 53.3431186], "geometry": {"coordinates": [-6.2700507, 53.3431186], "type": "Point"}, "id": "3", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:09:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "57", "stop_number": "4", "target_uid": "583412899"}, "type": "Feature"}, {"bbox": [-6.2642908, 53.3412009, -6.2642908, 53.3412009], "geometry": {"coordinates": [-6.2642908, 53.3412009], "type": "Point"}, "id": "4", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:12:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "77", "stop_number": "5", "target_uid": "768231205"}, "type": "Feature"}, {"bbox": [-6.2641191, 53.3410955, -6.2641191, 53.3410955], "geometry": {"coordinates": [-6.2641191, 53.3410955], "type": "Point"}, "id": "5", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:14:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "74", "stop_number": "6", "target_uid": "768231200"}, "type": "Feature"}, {"bbox": [-6.2641559, 53.3418854, -6.2641559, 53.3418854], "geometry": {"coordinates": [-6.2641559, 53.3418854], "type": "Point"}, "id": "6", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:16:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "56", "stop_number": "7", "target_uid": "583411333"}, "type": "Feature"}, {"bbox": [-6.2646102, 53.3419933, -6.2646102, 53.3419933], "geometry": {"coordinates": [-6.2646102, 53.3419933], "type": "Point"}, "id": "7", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:18:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "30", "stop_number": "8", "target_uid": "367411336"}, "type": "Feature"}, {"bbox": [-6.263866, 53.3431203, -6.263866, 53.3431203], "geometry": {"coordinates": [-6.263866, 53.3431203], "type": "Point"}, "id": "8", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:20:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "75", "stop_number": "9", "target_uid": "768231201"}, "type": "Feature"}, {"bbox": [-6.2626746, 53.3451323, -6.2626746, 53.3451323], "geometry": {"coordinates": [-6.2626746, 53.3451323], "type": "Point"}, "id": "9", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:23:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "39", "stop_number": "10", "target_uid": "467744860"}, "type": "Feature"}, {"bbox": [-6.2633552, 53.3456434, -6.2633552, 53.3456434], "geometry": {"coordinates": [-6.2633552, 53.3456434], "type": "Point"}, "id": "10", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:25:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "50", "stop_number": "11", "target_uid": "559485123"}, "type": "Feature"}, {"bbox": [-6.2623045, 53.342172, -6.2623045, 53.342172], "geometry": {"coordinates": [-6.2623045, 53.342172], "type": "Point"}, "id": "11", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:28:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "88", "stop_number": "12", "target_uid": "907142997"}, "type": "Feature"}, {"bbox": [-6.2654253, 53.3405863, -6.2654253, 53.3405863], "geometry": {"coordinates": [-6.2654253, 53.3405863], "type": "Point"}, "id": "12", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:30:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "45", "stop_number": "13", "target_uid": "503224346"}, "type": "Feature"}, {"bbox": [-6.2659032, 53.3374409, -6.2659032, 53.3374409], "geometry": {"coordinates": [-6.2659032, 53.3374409], "type": "Point"}, "id": "13", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:33:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "89", "stop_number": "14", "target_uid": "911170200"}, "type": "Feature"}, {"bbox": [-6.2657049, 53.3369586, -6.2657049, 53.3369586], "geometry": {"coordinates": [-6.2657049, 53.3369586], "type": "Point"}, "id": "14", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:35:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "13", "stop_idx": "46", "stop_number": "15", "target_uid": "503224354"}, "type": "Feature"}, {"bbox": [-6.2654765, 53.3360277, -6.2654765, 53.3360277], "geometry": {"coordinates": [-6.2654765, 53.3360277], "type": "Point"}, "id": "15", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:37:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "71", "stop_number": "16", "target_uid": "739756772"}, "type": "Feature"}, {"bbox": [-6.264995, 53.3353226, -6.264995, 53.3353226], "geometry": {"coordinates": [-6.264995, 53.3353226], "type": "Point"}, "id": "16", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:39:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "34", "stop_number": "17", "target_uid": "446783419"}, "type": "Feature"}, {"bbox": [-6.2605878, 53.3305512, -6.2605878, 53.3305512], "geometry": {"coordinates": [-6.2605878, 53.3305512], "type": "Point"}, "id": "17", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:42:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "1", "stop_number": "18", "target_uid": "133193958"}, "type": "Feature"}, {"bbox": [-6.2642006, 53.3306454, -6.2642006, 53.3306454], "geometry": {"coordinates": [-6.2642006, 53.3306454], "type": "Point"}, "id": "18", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:44:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "83", "stop_number": "19", "target_uid": "778699196"}, "type": "Feature"}, {"bbox": [-6.2652379, 53.330686, -6.2652379, 53.330686], "geometry": {"coordinates": [-6.2652379, 53.330686], "type": "Point"}, "id": "19", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:46:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "3", "stop_number": "20", "target_uid": "279464425"}, "type": "Feature"}, {"bbox": [-6.2647717, 53.3331138, -6.2647717, 53.3331138], "geometry": {"coordinates": [-6.2647717, 53.3331138], "type": "Point"}, "id": "20", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:48:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "82", "stop_number": "21", "target_uid": "778690166"}, "type": "Feature"}, {"bbox": [-6.2629302, 53.3344059, -6.2629302, 53.3344059], "geometry": {"coordinates": [-6.2629302, 53.3344059], "type": "Point"}, "id": "21", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:50:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "81", "stop_number": "22", "target_uid": "775415430"}, "type": "Feature"}, {"bbox": [-6.2635641, 53.3358434, -6.2635641, 53.3358434], "geometry": {"coordinates": [-6.2635641, 53.3358434], "type": "Point"}, "id": "22", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:52:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "72", "stop_number": "23", "target_uid": "739778204"}, "type": "Feature"}, {"bbox": [-6.2733761, 53.3389839, -6.2733761, 53.3389839], "geometry": {"coordinates": [-6.2733761, 53.3389839], "type": "Point"}, "id": "23", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:56:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "6", "stop_number": "24", "target_uid": "280958210"}, "type": "Feature"}, {"bbox": [-6.2734533, 53.3362336, -6.2734533, 53.3362336], "geometry": {"coordinates": [-6.2734533, 53.3362336], "type": "Point"}, "id": "24", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:59:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "55", "stop_number": "25", "target_uid": "583257143"}, "type": "Feature"}, {"bbox": [-6.2795312, 53.3216994, -6.2795312, 53.3216994], "geometry": {"coordinates": [-6.2795312, 53.3216994], "type": "Point"}, "id": "25", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:03:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "31", "stop_number": "26", "target_uid": "415802976"}, "type": "Feature"}, {"bbox": [-6.2830549, 53.3113561, -6.2830549, 53.3113561], "geometry": {"coordinates": [-6.2830549, 53.3113561], "type": "Point"}, "id": "26", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:07:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "25", "stop_number": "27", "target_uid": "315252689"}, "type": "Feature"}, {"bbox": [-6.2832454, 53.3100543, -6.2832454, 53.3100543], "geometry": {"coordinates": [-6.2832454, 53.3100543], "type": "Point"}, "id": "27", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:09:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "9", "stop_number": "28", "target_uid": "299224403"}, "type": "Feature"}, {"bbox": [-6.2841368, 53.3098046, -6.2841368, 53.3098046], "geometry": {"coordinates": [-6.2841368, 53.3098046], "type": "Point"}, "id": "28", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:11:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "10", "stop_number": "29", "target_uid": "299225092"}, "type": "Feature"}, {"bbox": [-6.2748056, 53.312007, -6.2748056, 53.312007], "geometry": {"coordinates": [-6.2748056, 53.312007], "type": "Point"}, "id": "29", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:14:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "32", "stop_number": "30", "target_uid": "415803254"}, "type": "Feature"}, {"bbox": [-6.2659123, 53.3221522, -6.2659123, 53.3221522], "geometry": {"coordinates": [-6.2659123, 53.3221522], "type": "Point"}, "id": "30", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:18:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "51", "stop_number": "31", "target_uid": "560602898"}, "type": "Feature"}, {"bbox": [-6.2651445, 53.3242854, -6.2651445, 53.3242854], "geometry": {"coordinates": [-6.2651445, 53.3242854], "type": "Point"}, "id": "31", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:20:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "90", "stop_number": "32", "target_uid": "932249376"}, "type": "Feature"}, {"bbox": [-6.2616703, 53.3275519, -6.2616703, 53.3275519], "geometry": {"coordinates": [-6.2616703, 53.3275519], "type": "Point"}, "id": "32", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:23:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "15", "stop_idx": "53", "stop_number": "33", "target_uid": "564399648"}, "type": "Feature"}, {"bbox": [-6.2503391, 53.3233904, -6.2503391, 53.3233904], "geometry": {"coordinates": [-6.2503391, 53.3233904], "type": "Point"}, "id": "33", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:27:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "54", "stop_number": "34", "target_uid": "565770327"}, "type": "Feature"}, {"bbox": [-6.2500808, 53.3233007, -6.2500808, 53.3233007], "geometry": {"coordinates": [-6.2500808, 53.3233007], "type": "Point"}, "id": "34", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:29:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "49", "stop_number": "35", "target_uid": "543384713"}, "type": "Feature"}, {"bbox": [-6.2404236, 53.3244334, -6.2404236, 53.3244334], "geometry": {"coordinates": [-6.2404236, 53.3244334], "type": "Point"}, "id": "35", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:32:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "42", "stop_number": "36", "target_uid": "479092745"}, "type": "Feature"}, {"bbox": [-6.2305605, 53.3291081, -6.2305605, 53.3291081], "geometry": {"coordinates": [-6.2305605, 53.3291081], "type": "Point"}, "id": "36", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:36:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "24", "stop_number": "37", "target_uid": "312577264"}, "type": "Feature"}, {"bbox": [-6.2303733, 53.3290475, -6.2303733, 53.3290475], "geometry": {"coordinates": [-6.2303733, 53.3290475], "type": "Point"}, "id": "37", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:38:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "23", "stop_number": "38", "target_uid": "312576904"}, "type": "Feature"}, {"bbox": [-6.230281, 53.3290182, -6.230281, 53.3290182], "geometry": {"coordinates": [-6.230281, 53.3290182], "type": "Point"}, "id": "38", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:40:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "22", "stop_number": "39", "target_uid": "312576639"}, "type": "Feature"}, {"bbox": [-6.2289281, 53.3285197, -6.2289281, 53.3285197], "geometry": {"coordinates": [-6.2289281, 53.3285197], "type": "Point"}, "id": "39", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:42:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "21", "stop_number": "40", "target_uid": "312576602"}, "type": "Feature"}, {"bbox": [-6.2152427, 53.3328247, -6.2152427, 53.3328247], "geometry": {"coordinates": [-6.2152427, 53.3328247], "type": "Point"}, "id": "40", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:47:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "5", "stop_idx": "20", "stop_number": "41", "target_uid": "312574927"}, "type": "Feature"}, {"bbox": [-6.2152784, 53.3323885, -6.2152784, 53.3323885], "geometry": {"coordinates": [-6.2152784, 53.3323885], "type": "Point"}, "id": "41", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:49:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "19", "stop_number": "42", "target_uid": "312574900"}, "type": "Feature"}, {"bbox": [-6.2225999, 53.3385836, -6.2225999, 53.3385836], "geometry": {"coordinates": [-6.2225999, 53.3385836], "type": "Point"}, "id": "42", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:53:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "18", "stop_number": "43", "target_uid": "312569935"}, "type": "Feature"}, {"bbox": [-6.2229321, 53.3386881, -6.2229321, 53.3386881], "geometry": {"coordinates": [-6.2229321, 53.3386881], "type": "Point"}, "id": "43", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:55:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "17", "stop_number": "44", "target_uid": "312569767"}, "type": "Feature"}, {"bbox": [-6.2275707, 53.3416876, -6.2275707, 53.3416876], "geometry": {"coordinates": [-6.2275707, 53.3416876], "type": "Point"}, "id": "44", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:57:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "14", "stop_idx": "16", "stop_number": "45", "target_uid": "312566081"}, "type": "Feature"}, {"bbox": [-6.2277525, 53.3416674, -6.2277525, 53.3416674], "geometry": {"coordinates": [-6.2277525, 53.3416674], "type": "Point"}, "id": "45", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:59:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "15", "stop_number": "46", "target_uid": "312565824"}, "type": "Feature"}, {"bbox": [-6.2381779, 53.3443491, -6.2381779, 53.3443491], "geometry": {"coordinates": [-6.2381779, 53.3443491], "type": "Point"}, "id": "46", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:04:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "47", "stop_number": "47", "target_uid": "516031805"}, "type": "Feature"}, {"bbox": [-6.2480239, 53.3492828, -6.2480239, 53.3492828], "geometry": {"coordinates": [-6.2480239, 53.3492828], "type": "Point"}, "id": "47", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:09:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "73", "stop_number": "48", "target_uid": "759295279"}, "type": "Feature"}, {"bbox": [-6.2430718, 53.3496181, -6.2430718, 53.3496181], "geometry": {"coordinates": [-6.2430718, 53.3496181], "type": "Point"}, "id": "48", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:11:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "70", "stop_number": "49", "target_uid": "725068375"}, "type": "Feature"}, {"bbox": [-6.2495435, 53.3523358, -6.2495435, 53.3523358], "geometry": {"coordinates": [-6.2495435, 53.3523358], "type": "Point"}, "id": "49", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:15:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "87", "stop_number": "50", "target_uid": "890854720"}, "type": "Feature"}, {"bbox": [-6.2497907, 53.3514108, -6.2497907, 53.3514108], "geometry": {"coordinates": [-6.2497907, 53.3514108], "type": "Point"}, "id": "50", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:17:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "8", "stop_idx": "66", "stop_number": "51", "target_uid": "636958169"}, "type": "Feature"}, {"bbox": [-6.254074, 53.3470972, -6.254074, 53.3470972], "geometry": {"coordinates": [-6.254074, 53.3470972], "type": "Point"}, "id": "51", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:20:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "13", "stop_idx": "12", "stop_number": "52", "target_uid": "306276661"}, "type": "Feature"}, {"bbox": [-6.2584016, 53.3469048, -6.2584016, 53.3469048], "geometry": {"coordinates": [-6.2584016, 53.3469048], "type": "Point"}, "id": "52", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:23:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "68", "stop_number": "53", "target_uid": "677596888"}, "type": "Feature"}, {"bbox": [-6.2633194, 53.3473835, -6.2633194, 53.3473835], "geometry": {"coordinates": [-6.2633194, 53.3473835], "type": "Point"}, "id": "53", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:26:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "13", "stop_idx": "61", "stop_number": "54", "target_uid": "613230592"}, "type": "Feature"}, {"bbox": [-6.2674686, 53.3502671, -6.2674686, 53.3502671], "geometry": {"coordinates": [-6.2674686, 53.3502671], "type": "Point"}, "id": "54", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:30:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "14", "stop_number": "55", "target_uid": "311099928"}, "type": "Feature"}, {"bbox": [-6.2704646, 53.3492625, -6.2704646, 53.3492625], "geometry": {"coordinates": [-6.2704646, 53.3492625], "type": "Point"}, "id": "55", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:34:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "65", "stop_number": "56", "target_uid": "635273448"}, "type": "Feature"}, {"bbox": [-6.2788764, 53.3498707, -6.2788764, 53.3498707], "geometry": {"coordinates": [-6.2788764, 53.3498707], "type": "Point"}, "id": "56", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:37:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "12", "stop_idx": "64", "stop_number": "57", "target_uid": "632666705"}, "type": "Feature"}, {"bbox": [-6.2802916, 53.3471016, -6.2802916, 53.3471016], "geometry": {"coordinates": [-6.2802916, 53.3471016], "type": "Point"}, "id": "57", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:40:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "11", "stop_idx": "35", "stop_number": "58", "target_uid": "446785628"}, "type": "Feature"}, {"bbox": [-6.2800493, 53.3470056, -6.2800493, 53.3470056], "geometry": {"coordinates": [-6.2800493, 53.3470056], "type": "Point"}, "id": "58", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:42:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "36", "stop_number": "59", "target_uid": "446785642"}, "type": "Feature"}, {"bbox": [-6.2905632, 53.3434972, -6.2905632, 53.3434972], "geometry": {"coordinates": [-6.2905632, 53.3434972], "type": "Point"}, "id": "59", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:46:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "10", "stop_idx": "79", "stop_number": "60", "target_uid": "768231918"}, "type": "Feature"}, {"bbox": [-6.2885248, 53.3424988, -6.2885248, 53.3424988], "geometry": {"coordinates": [-6.2885248, 53.3424988], "type": "Point"}, "id": "60", "properties": {"__folium_color": "#1f77b4", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:48:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "abstract-perrot", "service_time": "9", "stop_idx": "8", "stop_number": "61", "target_uid": "298721803"}, "type": "Feature"}, {"bbox": [-6.2906371, 53.333764, -6.2906371, 53.333764], "geometry": {"coordinates": [-6.2906371, 53.333764], "type": "Point"}, "id": "61", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:05:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "28", "stop_number": "1", "target_uid": "358543320"}, "type": "Feature"}, {"bbox": [-6.2927681, 53.3322249, -6.2927681, 53.3322249], "geometry": {"coordinates": [-6.2927681, 53.3322249], "type": "Point"}, "id": "62", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:07:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "86", "stop_number": "2", "target_uid": "882292497"}, "type": "Feature"}, {"bbox": [-6.304945, 53.328038, -6.304945, 53.328038], "geometry": {"coordinates": [-6.304945, 53.328038], "type": "Point"}, "id": "63", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:10:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "60", "stop_number": "3", "target_uid": "612623532"}, "type": "Feature"}, {"bbox": [-6.297985, 53.336171, -6.297985, 53.336171], "geometry": {"coordinates": [-6.297985, 53.336171], "type": "Point"}, "id": "64", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:14:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "78", "stop_number": "4", "target_uid": "768231917"}, "type": "Feature"}, {"bbox": [-6.299192, 53.3365462, -6.299192, 53.3365462], "geometry": {"coordinates": [-6.299192, 53.3365462], "type": "Point"}, "id": "65", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:16:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "29", "stop_number": "5", "target_uid": "358543587"}, "type": "Feature"}, {"bbox": [-6.3186912, 53.3395619, -6.3186912, 53.3395619], "geometry": {"coordinates": [-6.3186912, 53.3395619], "type": "Point"}, "id": "66", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:20:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "27", "stop_number": "6", "target_uid": "335980359"}, "type": "Feature"}, {"bbox": [-6.3213412, 53.3394911, -6.3213412, 53.3394911], "geometry": {"coordinates": [-6.3213412, 53.3394911], "type": "Point"}, "id": "67", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:22:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "11", "stop_idx": "40", "stop_number": "7", "target_uid": "475642367"}, "type": "Feature"}, {"bbox": [-6.3208057, 53.3395798, -6.3208057, 53.3395798], "geometry": {"coordinates": [-6.3208057, 53.3395798], "type": "Point"}, "id": "68", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:24:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "11", "stop_idx": "26", "stop_number": "8", "target_uid": "335569489"}, "type": "Feature"}, {"bbox": [-6.314328, 53.3405349, -6.314328, 53.3405349], "geometry": {"coordinates": [-6.314328, 53.3405349], "type": "Point"}, "id": "69", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:26:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "41", "stop_number": "9", "target_uid": "475642453"}, "type": "Feature"}, {"bbox": [-6.2924467, 53.3467462, -6.2924467, 53.3467462], "geometry": {"coordinates": [-6.2924467, 53.3467462], "type": "Point"}, "id": "70", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:31:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "12", "stop_idx": "85", "stop_number": "10", "target_uid": "830659393"}, "type": "Feature"}, {"bbox": [-6.2695992, 53.345976, -6.2695992, 53.345976], "geometry": {"coordinates": [-6.2695992, 53.345976], "type": "Point"}, "id": "71", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:38:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "11", "stop_number": "11", "target_uid": "305312829"}, "type": "Feature"}, {"bbox": [-6.2609325, 53.3472522, -6.2609325, 53.3472522], "geometry": {"coordinates": [-6.2609325, 53.3472522], "type": "Point"}, "id": "72", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:41:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "7", "stop_idx": "4", "stop_number": "12", "target_uid": "279915988"}, "type": "Feature"}, {"bbox": [-6.2746953, 53.3503544, -6.2746953, 53.3503544], "geometry": {"coordinates": [-6.2746953, 53.3503544], "type": "Point"}, "id": "73", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:47:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "80", "stop_number": "13", "target_uid": "768520263"}, "type": "Feature"}, {"bbox": [-6.2734242, 53.3588257, -6.2734242, 53.3588257], "geometry": {"coordinates": [-6.2734242, 53.3588257], "type": "Point"}, "id": "74", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:50:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "11", "stop_idx": "69", "stop_number": "14", "target_uid": "698087515"}, "type": "Feature"}, {"bbox": [-6.2725355, 53.3610075, -6.2725355, 53.3610075], "geometry": {"coordinates": [-6.2725355, 53.3610075], "type": "Point"}, "id": "75", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 07:52:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "11", "stop_idx": "48", "stop_number": "15", "target_uid": "538103859"}, "type": "Feature"}, {"bbox": [-6.2977657, 53.3898897, -6.2977657, 53.3898897], "geometry": {"coordinates": [-6.2977657, 53.3898897], "type": "Point"}, "id": "76", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:00:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "67", "stop_number": "16", "target_uid": "639829717"}, "type": "Feature"}, {"bbox": [-6.1613376, 53.4022449, -6.1613376, 53.4022449], "geometry": {"coordinates": [-6.1613376, 53.4022449], "type": "Point"}, "id": "77", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:17:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "12", "stop_idx": "59", "stop_number": "17", "target_uid": "598161343"}, "type": "Feature"}, {"bbox": [-6.1625014, 53.3951322, -6.1625014, 53.3951322], "geometry": {"coordinates": [-6.1625014, 53.3951322], "type": "Point"}, "id": "78", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:22:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "84", "stop_number": "18", "target_uid": "811533577"}, "type": "Feature"}, {"bbox": [-6.2288162, 53.365756, -6.2288162, 53.365756], "geometry": {"coordinates": [-6.2288162, 53.365756], "type": "Point"}, "id": "79", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:34:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "7", "stop_idx": "2", "stop_number": "19", "target_uid": "249426205"}, "type": "Feature"}, {"bbox": [-6.246853, 53.3777169, -6.246853, 53.3777169], "geometry": {"coordinates": [-6.246853, 53.3777169], "type": "Point"}, "id": "80", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:40:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "8", "stop_idx": "44", "stop_number": "20", "target_uid": "491319669"}, "type": "Feature"}, {"bbox": [-6.253083, 53.3727647, -6.253083, 53.3727647], "geometry": {"coordinates": [-6.253083, 53.3727647], "type": "Point"}, "id": "81", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:43:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "43", "stop_number": "21", "target_uid": "491319647"}, "type": "Feature"}, {"bbox": [-6.2512678, 53.3676758, -6.2512678, 53.3676758], "geometry": {"coordinates": [-6.2512678, 53.3676758], "type": "Point"}, "id": "82", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:46:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "5", "stop_number": "22", "target_uid": "280123269"}, "type": "Feature"}, {"bbox": [-6.2605498, 53.3514196, -6.2605498, 53.3514196], "geometry": {"coordinates": [-6.2605498, 53.3514196], "type": "Point"}, "id": "83", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:53:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "37", "stop_number": "23", "target_uid": "467744840"}, "type": "Feature"}, {"bbox": [-6.2529113, 53.350879, -6.2529113, 53.350879], "geometry": {"coordinates": [-6.2529113, 53.350879], "type": "Point"}, "id": "84", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:57:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "9", "stop_idx": "52", "stop_number": "24", "target_uid": "562072082"}, "type": "Feature"}, {"bbox": [-6.2548867, 53.3505727, -6.2548867, 53.3505727], "geometry": {"coordinates": [-6.2548867, 53.3505727], "type": "Point"}, "id": "85", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 08:59:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "8", "stop_idx": "38", "stop_number": "25", "target_uid": "467744856"}, "type": "Feature"}, {"bbox": [-6.2483476, 53.3452765, -6.2483476, 53.3452765], "geometry": {"coordinates": [-6.2483476, 53.3452765], "type": "Point"}, "id": "86", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:04:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "8", "stop_idx": "7", "stop_number": "26", "target_uid": "282342105"}, "type": "Feature"}, {"bbox": [-6.2432199, 53.3383463, -6.2432199, 53.3383463], "geometry": {"coordinates": [-6.2432199, 53.3383463], "type": "Point"}, "id": "87", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:08:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "14", "stop_idx": "58", "stop_number": "27", "target_uid": "592066036"}, "type": "Feature"}, {"bbox": [-6.2548436, 53.3421487, -6.2548436, 53.3421487], "geometry": {"coordinates": [-6.2548436, 53.3421487], "type": "Point"}, "id": "88", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:16:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "16", "stop_idx": "33", "stop_number": "28", "target_uid": "434153487"}, "type": "Feature"}, {"bbox": [-6.2617022, 53.3400902, -6.2617022, 53.3400902], "geometry": {"coordinates": [-6.2617022, 53.3400902], "type": "Point"}, "id": "89", "properties": {"__folium_color": "#9edae5", "close_1": "2030-01-02 20:00:00", "delivery": "5", "eta": "2030-01-02 09:23:00", "open_1": "2030-01-02 07:00:00", "pickup": "3", "route_name": "critical-blanchet", "service_time": "10", "stop_idx": "76", "stop_number": "29", "target_uid": "768231204"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+    geo_json_5e6f200585d6ed4c3e686139c35fa446.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature => {
+        if (feature === null) {
+            return '';
+        } else if (typeof(feature)=='object') {
+            return JSON.stringify(feature);
+        } else {
+            return feature;
+        }
+    }
+    let fields = ["route_name", "stop_idx", "eta", "stop_number", "target_uid", "delivery", "pickup", "service_time", "open_1", "close_1"];
+    let aliases = ["route_name", "stop_idx", "eta", "stop_number", "target_uid", "delivery", "pickup", "service_time", "open_1", "close_1"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i]}</th>
+            
+            <td>${handleObject(layer.feature.properties[v])}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{
+  "sticky": true,
+  "className": "foliumtooltip",
+});
+                     
+    
+            geo_json_5e6f200585d6ed4c3e686139c35fa446.addTo(map_29f4e7f062eabb3d438438b1899ffe55);
+        
+    
+        function geo_json_a7d4d50c3b7419cede1e07fddeb725fc_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "black", "fillColor": "black", "fillOpacity": 0.5, "weight": 2};
+            }
+        }
+        function geo_json_a7d4d50c3b7419cede1e07fddeb725fc_highlighter(feature) {
+            switch(feature.id) {
+                default:
+                    return {"fillOpacity": 0.75};
+            }
+        }
+        function geo_json_a7d4d50c3b7419cede1e07fddeb725fc_pointToLayer(feature, latlng) {
+            var opts = {
+  "radius": 2,
+  "fill": true,
+};
+            
+            let style = geo_json_a7d4d50c3b7419cede1e07fddeb725fc_styler(feature)
+            Object.assign(opts, style)
+            
+            return new L.Marker(latlng, opts)
+        }
+
+        function geo_json_a7d4d50c3b7419cede1e07fddeb725fc_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_a7d4d50c3b7419cede1e07fddeb725fc.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_a7d4d50c3b7419cede1e07fddeb725fc_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_a7d4d50c3b7419cede1e07fddeb725fc = L.geoJson(null, {
+                onEachFeature: geo_json_a7d4d50c3b7419cede1e07fddeb725fc_onEachFeature,
+            
+                style: geo_json_a7d4d50c3b7419cede1e07fddeb725fc_styler,
+                pointToLayer: geo_json_a7d4d50c3b7419cede1e07fddeb725fc_pointToLayer,
+            ...{
+}
+        });
+
+        function geo_json_a7d4d50c3b7419cede1e07fddeb725fc_add (data) {
+            geo_json_a7d4d50c3b7419cede1e07fddeb725fc
+                .addData(data);
+        }
+            geo_json_a7d4d50c3b7419cede1e07fddeb725fc_add({"bbox": [-6.28688, 53.341972, -6.28688, 53.341972], "features": [{"bbox": [-6.28688, 53.341972, -6.28688, 53.341972], "geometry": {"coordinates": [-6.28688, 53.341972], "type": "Point"}, "id": "0", "properties": {"__folium_color": "black"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+    geo_json_a7d4d50c3b7419cede1e07fddeb725fc.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    return div
+    }
+    ,{
+  "sticky": true,
+  "className": "foliumtooltip",
+});
+                     
+    
+            geo_json_a7d4d50c3b7419cede1e07fddeb725fc.addTo(map_29f4e7f062eabb3d438438b1899ffe55);
+        
+</script>
+</html>
