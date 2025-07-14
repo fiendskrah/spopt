@@ -324,7 +324,7 @@ class LastMile:
         )
         return self
 
-    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), *args, **kwargs):
+    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, *args, **kwargs):
         """
         Solve a LastMile() instance according to the existing specification. 
 
@@ -341,17 +341,20 @@ class LastMile:
         as the routes and stops found to routes_ and stops_, respectively
 
         Notes
-        -----
+        
         other arguments and keyword arguments are passed directly to the pyvrp.Model.solve() method
         """
+
+        routing_kwargs = kwargs.pop("routing", {})
+
         if (not hasattr(self, "clients_")) | (not hasattr(self, "trucks_")):
             raise SpecificationError(
                 "must assign both clients and trucks to" " solve a problem instance."
             )
-        all_lonlats = numpy.row_stack(
-            (self.depot_location, shapely.get_coordinates(self.clients_.geometry))
+        all_lonlats = numpy.vstack(
+            [self.depot_location] + list(shapely.get_coordinates(self.clients_.geometry))
         )
-        self._setup_graph(all_lonlats=all_lonlats)
+        self._setup_graph(all_lonlats=all_lonlats, routing=routing)
         self.result_ = self.model.solve(stop=stop, *args, **kwargs)
         self.routes_, self.stops_ = utils.routes_and_stops(
             self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit
@@ -386,7 +389,7 @@ class LastMile:
         ).explore(m=m, color="black", marker_type="marker")
         return m
 
-    def _setup_graph(self, all_lonlats):
+    def _setup_graph(self, all_lonlats, routing=None):
         """
         This sets up the graph pertaining to an inputted set of longitude and latitude coordinates. 
 
@@ -396,8 +399,13 @@ class LastMile:
         the restricted and the base profiles, then update the model
         with an edge for each profile. 
         """
+        routing = routing or {}
+        
         raw_distances, raw_durations = engine.build_route_table(
-            all_lonlats, all_lonlats, cost="both"
+            demand_sites=shapely.get_coordinates(self.clients_.geometry),
+            candidate_depots=[self.depot_location],
+            cost="both",
+            routing=routing
         )
         # how many minutes does it take to get from place to place?
         durations_by_block = numpy.ceil(raw_durations / 60)

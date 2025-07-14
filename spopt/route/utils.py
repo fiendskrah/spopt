@@ -117,7 +117,8 @@ def routes_and_stops(
     model, 
     target_geoms, 
     depot_location,
-    cost_unit=1e-4
+    cost_unit=1e-4,
+    **kwargs
     ):
     """
     Calculate route geometries and stop etas/waypoint numbers from an input
