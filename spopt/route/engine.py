@@ -11,23 +11,48 @@ import shapely
 from sklearn import metrics
 
 
-def build_specific_route(waypoints, return_durations=True, routing=None):
+def build_specific_route(waypoints,
+                         return_durations=True,
+                         routing={}):
     
     '''
+    Parameters
+    ----------
     
-    parameters:
-    waypoints = a list of coordinate pairs between which to path a vehicular route. The coordinates are also expected 
-    as a list, e.g.: [[-6.2288162, 53.365756], [-6.2652379, 53.330686]]
+    waypoints : list, required
+         A list of coordinate pairs between which to path a vehicular route.
+         The coordinates are also expected as a list.
+         e.g.: [[-6.2288162, 53.365756], [-6.2652379, 53.330686]].
     
-    engine = The intended routingpy engine to be utilized
+    return_durations : boolean, required
+         Set to ``True`` to return durations for each leg.
+         Default is ``True``.
+
+    routing : dictionary, optional
+        Specifies which engine and associated parameters to utilize for the request.
+        Supported engines:
+            OSRM - Open Source Routing Machine
+
+
+    Returns
+    -------
     
-    baseurl = the url address of an active routingpy engine service
-    
-    return_durations = True
+    route_shape : geometry
+        A linestring reflecting the shortest path between the inputed waypoints.
+
+    leg_duration : numpy.array
+        An array of the durations on each leg of the route.
     '''
-    routing = routing or {}
-    engine_cls = routing.pop('engine', OSRM)
-    engine = engine_cls(**routing)
+    routing = (routing or {}).copy()
+    if routing is None:
+        raise ValueError("Routing configuration must be provided.")
+    if "engine" not in routing:
+        raise ValueError("Routing dictionary must include 'engine' key (e.g. OSRM).")
+    if "engine" in routing:
+        engine_cls = routing.pop("engine", OSRM)
+        engine = engine_cls(**routing)
+    else:
+        print('not implemented yet')
     
     # Step 1: Get directions
     directions = engine.directions(
@@ -58,11 +83,12 @@ def build_specific_route(waypoints, return_durations=True, routing=None):
         return route_shape
 
 
-def build_route_table(demand_sites, candidate_depots, cost='distance', routing=None):
+def build_route_table(demand_sites,
+                      candidate_depots,
+                      cost='distance',
+                      routing={}):
     
     '''
-    Replaces _build_route_table_http using routingpy.OSRM.matrix()
-
     parameters:
     demand_sites = a list of coordinates pairs for clients. The coordinates are also expected 
     as a list, e.g.: [[-6.2288162, 53.365756], [-6.2652379, 53.330686]]
@@ -71,10 +97,15 @@ def build_route_table(demand_sites, candidate_depots, cost='distance', routing=N
     as a list, e.g.: [[-6.2288162, 53.365756]
     
     returns tuple (distance_matrix, duration_matrix)
+
+    
     '''
-    routing = routing or {}
-    engine_cls = routing.pop("engine", OSRM)
-    engine = engine_cls(**routing)
+    routing = (routing or {}).copy()
+    if "engine" in routing:
+        engine_cls = routing.pop("engine", OSRM)
+        engine = engine_cls(**routing)
+    else:
+        print('not implemented yet')
     
     candidate_series = pandas.Series([tuple(coord) for coord in candidate_depots])
     demand_series = pandas.Series([tuple(coord) for coord in demand_sites])
@@ -90,7 +121,6 @@ def build_route_table(demand_sites, candidate_depots, cost='distance', routing=N
     else:
         raise ValueError(f"Unsupported cost type '{cost}'")
 
-    # Call OSRM matrix
     result = engine.matrix(
         locations=all_points,
         annotations=annotations

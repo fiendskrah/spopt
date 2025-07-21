@@ -324,7 +324,9 @@ class LastMile:
         )
         return self
 
-    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, *args, **kwargs):
+#    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, *args, **kwargs):
+    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), *args, **kwargs):
+
         """
         Solve a LastMile() instance according to the existing specification. 
 
@@ -345,7 +347,9 @@ class LastMile:
         other arguments and keyword arguments are passed directly to the pyvrp.Model.solve() method
         """
 
-        routing_kwargs = kwargs.pop("routing", {})
+        self.routing_ = kwargs.pop("routing", {}).copy()
+        
+        #if routing is empty, fallback to euclidean distances
 
         if (not hasattr(self, "clients_")) | (not hasattr(self, "trucks_")):
             raise SpecificationError(
@@ -354,10 +358,20 @@ class LastMile:
         all_lonlats = numpy.vstack(
             [self.depot_location] + list(shapely.get_coordinates(self.clients_.geometry))
         )
-        self._setup_graph(all_lonlats=all_lonlats, routing=routing)
-        self.result_ = self.model.solve(stop=stop, *args, **kwargs)
+        self._setup_graph(all_lonlats=all_lonlats) #setup the graph (needs routing)
+
+        routing_for_solve = self.routing_.copy()
+        engine_cls = routing_for_solve.pop("engine", None) # pop routing off before solve
+        print(f'engine is defined as: {engine_cls}')
+        self.result_ = self.model.solve(stop=stop, *args, **kwargs) # solve (cannot have routing)
+        
+        if engine_cls is not None: # if there is an engine class defined,
+            self.routing_["engine"] = engine_cls # put it back into routing
+            
+        print(self.routing_)
+        
         self.routes_, self.stops_ = utils.routes_and_stops(
-            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit
+            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit, routing=self.routing_.copy()
         )
         return self
 
@@ -389,7 +403,7 @@ class LastMile:
         ).explore(m=m, color="black", marker_type="marker")
         return m
 
-    def _setup_graph(self, all_lonlats, routing=None):
+    def _setup_graph(self, all_lonlats):
         """
         This sets up the graph pertaining to an inputted set of longitude and latitude coordinates. 
 
@@ -399,7 +413,7 @@ class LastMile:
         the restricted and the base profiles, then update the model
         with an edge for each profile. 
         """
-        routing = routing or {}
+        routing = self.routing_
         
         raw_distances, raw_durations = engine.build_route_table(
             demand_sites=shapely.get_coordinates(self.clients_.geometry),
