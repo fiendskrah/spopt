@@ -324,8 +324,7 @@ class LastMile:
         )
         return self
 
-#    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, *args, **kwargs):
-    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), *args, **kwargs):
+    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, routing_kws=None, *args, **kwargs):
 
         """
         Solve a LastMile() instance according to the existing specification. 
@@ -336,6 +335,16 @@ class LastMile:
             A stopping rule that governs when the simulation will be ended. 
             Set to terminate solving after one million iterations with no improvement.
 
+        routing   :   routingpy.routers
+            One of several routing API clients provided by the routingpy package. 
+
+        routing_kws   :   dict
+            Keyword arguments that are passed to the provided routingpy service.
+            Example usage is to pass the baseurl where the OSRM backend docker container is running e.g.:
+            `routing={"base_url": "http://localhost:5000"}`.
+            Other services require different keywords - see the routingpy documentation:
+            https://github.com/mthh/routingpy/tree/master
+        
 
         Returns
         -------
@@ -347,9 +356,10 @@ class LastMile:
         other arguments and keyword arguments are passed directly to the pyvrp.Model.solve() method
         """
 
-        self.routing_ = kwargs.pop("routing", {}).copy()
-        
-        #if routing is empty, fallback to euclidean distances
+        base_url = routing_kws.pop('base_url', None)
+        self.routing_kws_ = routing_kws or {}
+        self.routing_ = routing(base_url=base_url) if base_url else routing(**routing_kws)
+        # TODO: if routing is empty, fallback to euclidean distances
 
         if (not hasattr(self, "clients_")) | (not hasattr(self, "trucks_")):
             raise SpecificationError(
@@ -358,20 +368,14 @@ class LastMile:
         all_lonlats = numpy.vstack(
             [self.depot_location] + list(shapely.get_coordinates(self.clients_.geometry))
         )
-        self._setup_graph(all_lonlats=all_lonlats) #setup the graph (needs routing)
 
-        routing_for_solve = self.routing_.copy()
-        engine_cls = routing_for_solve.pop("engine", None) # pop routing off before solve
-        print(f'engine is defined as: {engine_cls}')
-        self.result_ = self.model.solve(stop=stop, *args, **kwargs) # solve (cannot have routing)
+        print(f'engine is defined as: {self.routing_}')
+        self._setup_graph(all_lonlats=all_lonlats, routing=self.routing_, routing_kws=self.routing_kws_)
         
-        if engine_cls is not None: # if there is an engine class defined,
-            self.routing_["engine"] = engine_cls # put it back into routing
-            
-        print(self.routing_)
+        self.result_ = self.model.solve(stop=stop, *args, **kwargs)
         
         self.routes_, self.stops_ = utils.routes_and_stops(
-            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit, routing=self.routing_.copy()
+            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit, routing=self.routing_
         )
         return self
 
@@ -403,7 +407,7 @@ class LastMile:
         ).explore(m=m, color="black", marker_type="marker")
         return m
 
-    def _setup_graph(self, all_lonlats):
+    def _setup_graph(self, all_lonlats, routing, routing_kws):
         """
         This sets up the graph pertaining to an inputted set of longitude and latitude coordinates. 
 
@@ -419,7 +423,8 @@ class LastMile:
             demand_sites=shapely.get_coordinates(self.clients_.geometry),
             candidate_depots=[self.depot_location],
             cost="both",
-            routing=routing
+            routing=self.routing_,
+            routing_kws=self.routing_kws_
         )
         # how many minutes does it take to get from place to place?
         durations_by_block = numpy.ceil(raw_durations / 60)

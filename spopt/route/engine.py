@@ -1,5 +1,5 @@
 import routingpy
-from routingpy import OSRM
+from routingpy import OSRM, Valhalla
 
 import os
 import numpy
@@ -13,7 +13,7 @@ from sklearn import metrics
 
 def build_specific_route(waypoints,
                          return_durations=True,
-                         routing={}):
+                         **kwargs):
     
     '''
     Parameters
@@ -43,22 +43,11 @@ def build_specific_route(waypoints,
     leg_duration : numpy.array
         An array of the durations on each leg of the route.
     '''
-    routing = (routing or {}).copy()
-    if routing is None:
-        raise ValueError("Routing configuration must be provided.")
-    if "engine" not in routing:
-        raise ValueError("Routing dictionary must include 'engine' key (e.g. OSRM).")
-    if "engine" in routing:
-        engine_cls = routing.pop("engine", OSRM)
-        engine = engine_cls(**routing)
-    else:
-        print('not implemented yet')
+    engine = kwargs.get("routing")
     
     # Step 1: Get directions
     directions = engine.directions(
         locations=waypoints,
-        profile='driving',
-        steps=True,
         geometries='geojson',
         annotations=True
     )
@@ -86,7 +75,7 @@ def build_specific_route(waypoints,
 def build_route_table(demand_sites,
                       candidate_depots,
                       cost='distance',
-                      routing={}):
+                      **kwargs):
     
     '''
     parameters:
@@ -100,13 +89,9 @@ def build_route_table(demand_sites,
 
     
     '''
-    routing = (routing or {}).copy()
-    if "engine" in routing:
-        engine_cls = routing.pop("engine", OSRM)
-        engine = engine_cls(**routing)
-    else:
-        print('not implemented yet')
-    
+    engine = kwargs.get("routing")
+    routing_kws = kwargs.get("routing_kws", {})
+                       
     candidate_series = pandas.Series([tuple(coord) for coord in candidate_depots])
     demand_series = pandas.Series([tuple(coord) for coord in demand_sites])
     all_points = pandas.concat((candidate_series, demand_series)).reset_index(drop=True)
@@ -121,11 +106,27 @@ def build_route_table(demand_sites,
     else:
         raise ValueError(f"Unsupported cost type '{cost}'")
 
-    result = engine.matrix(
-        locations=all_points,
-        annotations=annotations
-    )
+    print("Extra kwargs:")
+    print(kwargs)
+    if isinstance(engine, OSRM):
+        
+        result = engine.matrix(
+            locations=all_points,
+            annotations=annotations,
+        )
 
+    elif isinstance(engine, Valhalla):
+        profile = routing_kws.get("profile")
+        print(profile)
+        result = engine.matrix(
+            locations=all_points,
+            annotations=annotations,
+            profile=profile
+        )
+        
+    else:
+        raise ValueError(f"Unsupported engine '{engine}'")
+    
     # Parse outputs
     distances = numpy.asarray(result.distances).astype(float) if 'distance' in annotations else None
     durations = numpy.asarray(result.durations).astype(float) if 'duration' in annotations else None
