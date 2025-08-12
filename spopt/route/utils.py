@@ -258,7 +258,7 @@ def routes_and_stops(
                 coordinates, 
                 depot_location
                 )
-            ), routing=kwargs.get("routing", {})
+            ), routing=kwargs.get("routing", None)
         )
         route_truck_type = route_obj.vehicle_type()
         truck_obj = model.vehicle_types[route_truck_type]

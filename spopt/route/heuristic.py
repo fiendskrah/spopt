@@ -2,7 +2,7 @@ import geopandas
 import numpy
 import pandas
 import shapely
-
+from sklearn import metrics
 import pyvrp
 from . import engine
 from . import utils
@@ -324,7 +324,7 @@ class LastMile:
         )
         return self
 
-    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, routing_kws=None, *args, **kwargs):
+    def solve(self, stop=pyvrp.stop.NoImprovement(1e6), routing=None, routing_kws={}, *args, **kwargs):
 
         """
         Solve a LastMile() instance according to the existing specification. 
@@ -355,12 +355,7 @@ class LastMile:
         
         other arguments and keyword arguments are passed directly to the pyvrp.Model.solve() method
         """
-
-        base_url = routing_kws.pop('base_url', None)
-        self.routing_kws_ = routing_kws or {}
-        self.routing_ = routing(base_url=base_url) if base_url else routing(**routing_kws)
-        # TODO: if routing is empty, fallback to euclidean distances
-
+         
         if (not hasattr(self, "clients_")) | (not hasattr(self, "trucks_")):
             raise SpecificationError(
                 "must assign both clients and trucks to" " solve a problem instance."
@@ -368,17 +363,26 @@ class LastMile:
         all_lonlats = numpy.vstack(
             [self.depot_location] + list(shapely.get_coordinates(self.clients_.geometry))
         )
-
-        print(f'engine is defined as: {self.routing_}')
-        self._setup_graph(all_lonlats=all_lonlats, routing=self.routing_, routing_kws=self.routing_kws_)
         
+        if routing is not None:
+        # if engine is provided
+            base_url = routing_kws.pop('base_url', None)
+            self.routing_kws_ = routing_kws
+            self.routing_ = routing(base_url=base_url) if base_url else routing(**routing_kws)
+            print(f'engine is defined as: {self.routing_}')
+            
+            self._setup_graph(all_lonlats=all_lonlats, routing=self.routing_, routing_kws=self.routing_kws_)
+            
+        else:
+        # if no engine is provided
+            self._setup_graph(all_lonlats=all_lonlats)
+
         self.result_ = self.model.solve(stop=stop, *args, **kwargs)
-        
-        self.routes_, self.stops_ = utils.routes_and_stops(
-            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit, routing=self.routing_
-        )
-        return self
 
+        self.routes_, self.stops_ = utils.routes_and_stops(
+            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit
+        )
+            
     solve.__doc__ = pyvrp.Model.solve.__doc__
 
     def explore(self):
@@ -407,7 +411,7 @@ class LastMile:
         ).explore(m=m, color="black", marker_type="marker")
         return m
 
-    def _setup_graph(self, all_lonlats, routing, routing_kws):
+    def _setup_graph(self, all_lonlats, *args, **kwargs):
         """
         This sets up the graph pertaining to an inputted set of longitude and latitude coordinates. 
 
@@ -417,31 +421,55 @@ class LastMile:
         the restricted and the base profiles, then update the model
         with an edge for each profile. 
         """
-        routing = self.routing_
-        
-        raw_distances, raw_durations = engine.build_route_table(
-            demand_sites=shapely.get_coordinates(self.clients_.geometry),
-            candidate_depots=[self.depot_location],
-            cost="both",
-            routing=self.routing_,
-            routing_kws=self.routing_kws_
-        )
-        # how many minutes does it take to get from place to place?
-        durations_by_block = numpy.ceil(raw_durations / 60)
-        ##### WARNING!!!!!!! THIS IS A BUG IN OSRM #5855
-        durations = numpy.clip(durations_by_block, 0, durations_by_block.max())
-        distances = numpy.clip(raw_distances, 0, raw_distances.max()).round(0)
+        if hasattr(self, "routing_") and self.routing_:
+            
+            raw_distances, raw_durations = engine.build_route_table(
+                demand_sites=shapely.get_coordinates(self.clients_.geometry),
+                candidate_depots=[self.depot_location],
+                cost="both",
+                routing=self.routing_,
+                routing_kws=self.routing_kws_
+            )
 
-        duration_df = pandas.DataFrame(
-            durations,
-            index=[self.depot_name] + self.clients_.index.tolist(),
-            columns=[self.depot_name] + self.clients_.index.tolist(),
-        )
-        distance_df = pandas.DataFrame(
-            distances,
-            index=[self.depot_name] + self.clients_.index.tolist(),
-            columns=[self.depot_name] + self.clients_.index.tolist(),
-        )
+            # how many minutes does it take to get from place to place?
+            durations_by_block = numpy.ceil(raw_durations / 60)
+            durations = numpy.clip(durations_by_block, 0, durations_by_block.max())
+            distances = numpy.clip(raw_distances, 0, raw_distances.max()).round(0)
+
+            duration_df = pandas.DataFrame(
+                durations,
+                index=[self.depot_name] + self.clients_.index.tolist(),
+                columns=[self.depot_name] + self.clients_.index.tolist(),
+            )
+            distance_df = pandas.DataFrame(
+                distances,
+                index=[self.depot_name] + self.clients_.index.tolist(),
+                columns=[self.depot_name] + self.clients_.index.tolist(),
+            )
+
+        else:
+            raw_distances, raw_durations = engine.build_route_table(
+                demand_sites=shapely.get_coordinates(self.clients_.geometry),
+                candidate_depots=[self.depot_location],
+                cost="both",
+            )
+            
+            # Do I need durations_by_block when using euclidean distances?
+            # durations_by_block = numpy.ceil(raw_durations / 60)
+            durations = numpy.clip(raw_durations, 0, raw_durations.max())
+            distances = numpy.clip(raw_distances, 0, raw_distances.max()).round(0)
+
+            duration_df = pandas.DataFrame(
+                durations,
+                index=[self.depot_name] + self.clients_.index.tolist(),
+                columns=[self.depot_name] + self.clients_.index.tolist(),
+            )
+            distance_df = pandas.DataFrame(
+                distances,
+                index=[self.depot_name] + self.clients_.index.tolist(),
+                columns=[self.depot_name] + self.clients_.index.tolist(),
+            )
+        
         for source_ix, source in enumerate(self.model.locations):
             for sink_ix, sink in enumerate(self.model.locations):
                 self.model.add_edge(
