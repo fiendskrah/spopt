@@ -54,7 +54,7 @@ class LastMile:
         time_windows=None,
         fixed_cost=None,
         cost_per_meter=None,
-        cost_per_minute=30 / 60,
+        cost_per_minute=None, # needs to change based on the router. silently ignore if none is passed 
         max_duration=pandas.Timedelta(hours=8, minutes=00),
         max_distance=None,
     ):
@@ -355,32 +355,39 @@ class LastMile:
         
         other arguments and keyword arguments are passed directly to the pyvrp.Model.solve() method
         """
-         
+        self.routing_ = None
+        self.routing_kws_ = {}
+
         if (not hasattr(self, "clients_")) | (not hasattr(self, "trucks_")):
-            raise SpecificationError(
-                "must assign both clients and trucks to" " solve a problem instance."
-            )
+            raise SpecificationError("must assign both clients and trucks to" " solve a problem instance.")
+        
         all_lonlats = numpy.vstack(
             [self.depot_location] + list(shapely.get_coordinates(self.clients_.geometry))
         )
         
-        if routing is not None:
         # if engine is provided
+        routing_kws = {} if routing_kws is None else dict(routing_kws)
+        if routing is not None:
             base_url = routing_kws.pop('base_url', None)
             self.routing_kws_ = routing_kws
             self.routing_ = routing(base_url=base_url) if base_url else routing(**routing_kws)
-            print(f'engine is defined as: {self.routing_}')
-            
+            print(f'routing engine is defined as: {self.routing_}')
             self._setup_graph(all_lonlats=all_lonlats, routing=self.routing_, routing_kws=self.routing_kws_)
             
-        else:
         # if no engine is provided
+        else:
             self._setup_graph(all_lonlats=all_lonlats)
 
-        self.result_ = self.model.solve(stop=stop, *args, **kwargs)
 
+        self.result_ = self.model.solve(stop=stop, *args, **kwargs)
         self.routes_, self.stops_ = utils.routes_and_stops(
-            self.result_.best, self.model, self.clients_, self.depot_location, cost_unit=self.cost_unit
+            self.result_.best,
+            self.model,
+            self.clients_,
+            self.depot_location,
+            cost_unit=self.cost_unit,
+            routing=self.routing_,
+            **self.routing_kws_
         )
             
     solve.__doc__ = pyvrp.Model.solve.__doc__

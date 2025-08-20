@@ -13,6 +13,7 @@ from sklearn import metrics
 
 def build_specific_route(waypoints,
                          return_durations=True,
+                         routing=None,
                          **kwargs):
     
     '''
@@ -42,7 +43,7 @@ def build_specific_route(waypoints,
     leg_duration : numpy.array
         An array of the durations on each leg of the route.
     '''
-    engine = kwargs.get("routing", None)
+    engine = routing if routing is not None else kwargs.get("routing", None)
     
     if isinstance(engine, OSRM):
         directions = engine.directions(
@@ -50,18 +51,21 @@ def build_specific_route(waypoints,
             geometries='geojson',
             annotations=True
         )
+        
     elif isinstance(engine, Valhalla):
+        profile = kwargs.get("profile")
         directions = engine.directions(
             locations=waypoints,
             geometries='geojson',
             annotations=True,
             profile=profile
         )
+        
     elif engine is None:
         route_shape = shapely.LineString(waypoints)
         prep_points = numpy.fliplr(numpy.deg2rad(numpy.array(waypoints, dtype=float)))
         leg_durations = numpy.array([
-            (metrics.pairwise.haversine_distances([prep_points[i]], [prep_points[i + 1]]) * 637000 / 10) ** 0.75
+            (metrics.pairwise.haversine_distances([prep_points[i]], [prep_points[i + 1]]) * 637000 / 10)
             for i in range(len(prep_points) - 1)
         ])
 
@@ -71,10 +75,8 @@ def build_specific_route(waypoints,
     if isinstance (engine, (OSRM, Valhalla)):
         route_coords = directions.geometry  # List of (lon, lat)
         route_shape = shapely.LineString(route_coords)
-
         legs = directions.raw['routes'][0]['legs']
         leg_durations = numpy.array([leg['duration'] for leg in legs])
-
         numpy.testing.assert_array_equal(
             len(legs),
             len(waypoints) - 1
@@ -115,7 +117,7 @@ def build_route_table(demand_sites,
     
         warnings.warn(
                 "Failed to connect to routing engine... using haversine distance"
-                " and (d/500)**.75 for durations"
+                "durations = 0"
                     )
         
         coords_array = numpy.array(all_points.to_list(), dtype=float) # needed for deg2rad
@@ -124,7 +126,7 @@ def build_route_table(demand_sites,
                     numpy.fliplr(numpy.deg2rad(coords_array)),
                     metric="haversine"
                 ) * 6371000
-        durations = numpy.ceil((distances / 10) ** .75)
+        durations = numpy.zeros_like(distances) # set all durations to match distances (0)
 
     else:
     # engine is provided
@@ -140,7 +142,6 @@ def build_route_table(demand_sites,
             raise ValueError(f"Unsupported cost type '{cost}'")
 
         if isinstance(engine, OSRM):
-
             result = engine.matrix(
                 locations=all_points,
                 annotations=annotations,
@@ -148,7 +149,7 @@ def build_route_table(demand_sites,
             
         elif isinstance(engine, Valhalla):
             profile = routing_kws.get("profile")
-            print(profile)
+            print(f'routing profile: {profile}')
             result = engine.matrix(
                 locations=all_points,
                 annotations=annotations,
