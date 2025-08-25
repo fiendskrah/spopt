@@ -251,7 +251,6 @@ def routes_and_stops(
         route_obj = route_lut[name]
         group = group.sort_values("stop_number")
         coordinates = shapely.get_coordinates(group.geometry)
-        print("[routes_and_stops] routing passed type:", type(kwargs.get("routing", None)))
         shape, durations = engine.build_specific_route(
             numpy.vstack(
                 (
